@@ -5,6 +5,7 @@ import config from '../config';
 import { Secret } from 'jsonwebtoken';
 import prisma from '../shared/prisma';
 import AppError from '../error/AppError';
+import { User } from '@prisma/client';
 
 const auth = (...roles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -19,21 +20,21 @@ const auth = (...roles: string[]) => {
         config.JWT.JWT_ACCESS_SECRET as Secret,
       );
 
-      req.user = verifyUser;
-
+      
       if (roles.length && !roles.includes(verifyUser.role)) {
         throw new AppError(status.UNAUTHORIZED, 'You are not authorized!');
       }
-
-      const userData = await prisma.user.findUniqueOrThrow({
+      
+      const userData:User = await prisma.user.findUniqueOrThrow({
         where: {
-          email: verifyUser.email
+          email: verifyUser?.email
         },
       });
-
       if (!userData) {
         throw new AppError(status.NOT_FOUND, 'User is Not Found!');
       }
+
+      req.user = verifyUser;
       next();
     } catch (err) {
       next(err);

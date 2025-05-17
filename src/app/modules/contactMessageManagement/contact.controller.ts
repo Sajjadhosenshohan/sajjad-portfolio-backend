@@ -4,8 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import { ContactServices } from './contact.service';
 
 const addMessageData = catchAsync(async (req, res) => {
-  // console.log(req.body);
-  const result = await ContactServices.addMessageIndoDB(req.body);
+  const result = await ContactServices.addMessageIntoDB(req.body);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -23,7 +22,18 @@ const getAllMessageData = catchAsync(async (req, res) => {
   });
 });
 
+const deleteMessageDataFromDB = catchAsync(async (req, res) => {
+  const result = await ContactServices.deleteMessageDataFromDB(req.query.id as string);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Message deleted successfully',
+    data: result,
+  });
+});
+
 export const ContactController = {
   addMessageData,
   getAllMessageData,
+  deleteMessageDataFromDB
 };

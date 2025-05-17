@@ -18,6 +18,7 @@ app.use(cors(corseOptions));
 // parder
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // application routes
 app.use('/api', router);

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { blogRoutes } from '../modules/blogManagement/blog.route';
 import { projectRoutes } from '../modules/projectManagement/project.route';
-import { contactRoutes } from '../modules/contactMessageManagement/contact.route';
+import {  MessageRoutes } from '../modules/contactMessageManagement/contact.route';
 import { AuthRoutes } from '../modules/Auth/auth.route';
 import { UserRoutes } from '../modules/User/user.route';
 import { SkillRoutes } from '../modules/skills/skill.route';
@@ -36,7 +36,7 @@ const moduleRoutes: { path: string; route: Router }[] = [
   },
   {
     path: '/message',
-    route: contactRoutes,
+    route: MessageRoutes,
   },
 ];
 
