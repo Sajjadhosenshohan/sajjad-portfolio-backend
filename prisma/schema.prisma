@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email          String  @unique
+  password   String
+  profile_image String?
+  role UserRole @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  blog   Blog[]
+  project Project[]
+
+  @@map("users")
+}
+
+model Project {
+  id                String @id @default(uuid())
+  title             String
+  live_link         String
+  client_link       String
+  server_link       String
+  description String
+  technologies        String[]
+  product_image             String
+
+  authorId String
+  author   User @relation(fields: [authorId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model Blog {
+  id                String   @id @default(uuid())
+  title             String
+  slug              String?
+  short_description String
+  blog_image             String
+  status            BlogStatus @default(DRAFT)
+  publishDate       DateTime?
+
+  tags              String[] // array of tags like ["React", "Tutorial", "JS"]
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("blogs")
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  // phone     String?
+  // subject   String?
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("messages")
+}
+
+model Resume {
+  id        String   @id @default(uuid())
+  title     String
+  pdfUrl    String
+  publicId  String?  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  isActive  Boolean   @default(false) 
+
+  @@map("resumes")
+}
+
+model Skill {
+  id        String   @id @default(uuid())
+  name      String
+  // Optional: Beginner, Intermediate, Expert // level     String 
+  image     String? // Skill icon URL (e.g. Cloudinary or local link)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("skills")
+}
+
+
+enum UserRole {
+  ADMIN
+  USER
+}
