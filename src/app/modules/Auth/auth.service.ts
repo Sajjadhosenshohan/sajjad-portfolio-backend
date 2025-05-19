@@ -62,8 +62,7 @@ const refreshToken = async (token: string) => {
 
   const isUserExists = await prisma.user.findUniqueOrThrow({
     where: {
-      email: decodedData?.email,
-      status: UserStatus.ACTIVE,
+      email: decodedData?.email
     },
   });
 
@@ -118,8 +117,7 @@ const changePassword = async (user: JwtPayload, payload: any) => {
 const forgotPassword = async (payload: { email: string }) => {
   const userData = await prisma.user.findUnique({
     where: {
-      email: payload.email,
-      status: UserStatus.ACTIVE,
+      email: payload.email
     },
   });
 
@@ -168,8 +166,7 @@ const resetPassword = async (
 ) => {
   const userData = await prisma.user.findUnique({
     where: {
-      email: payload.email, //there i chaged 
-      status: UserStatus.ACTIVE,
+      email: payload.email
     },
   });
 

@@ -32,7 +32,6 @@ router.put(
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     if (req.file) {
-      console.log(req.file.path);
       req.body.blog_image = req?.file?.path;
     }
     next();

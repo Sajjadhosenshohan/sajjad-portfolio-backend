@@ -100,6 +100,7 @@ model Resume {
 model Skill {
   id        String   @id @default(uuid())
   name      String
+  category  String
   // Optional: Beginner, Intermediate, Expert // level     String 
   image     String? // Skill icon URL (e.g. Cloudinary or local link)
   createdAt DateTime @default(now())

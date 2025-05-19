@@ -15,11 +15,17 @@ const getAllProjectDataFromDB = async () => {
 };
 
 const deletedProjectIntoDB = async (id: string) => {
-  const result = await prisma.project.findUniqueOrThrow({
+  await prisma.project.findUniqueOrThrow({
     where: {
       id
     }
   });
+
+const result = await prisma.project.delete({
+  where: {
+    id
+  }
+})
 
   return result;
 };

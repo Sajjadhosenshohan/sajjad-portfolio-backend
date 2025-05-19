@@ -35,7 +35,7 @@ const deletedBlogIntoDB = async (id: string) => {
   return result;
 };
 const updateBlogIntoDB = async (id: string, blogInfo: Partial<Blog>) => {
-  await prisma.blog.findUniqueOrThrow({
+  const blog = await prisma.blog.findUniqueOrThrow({
     where: {
       id,
     },
