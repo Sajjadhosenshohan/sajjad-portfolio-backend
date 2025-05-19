@@ -1,33 +1,36 @@
 import express, { NextFunction, Request, Response } from "express";
-import { ResumeController } from "./resume.controller";
+import {
+  ResumeController,
+} from "./resume.controller";
 import { UserRole } from "@prisma/client";
 import auth from "../../middlewares/auth";
-import { multerPdfUpload } from "../../config/multer.config";
+import {  upload } from "../../config/multer.config";
 
 const router = express.Router();
 
 router.post(
   "/add-resume",
   auth(UserRole.ADMIN),
-  multerPdfUpload.single("file"),
+  upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
     if (req.file) {
-      req.body.pdfUrl = req?.file?.path;
+      console.log("req.file", req.file);
     }
     next();
   },
- ResumeController.addResumeIntoDB
+  ResumeController.addResumeIntoDB
 );
+
 router.get("/", ResumeController.getAllResumeDataFromDB);
+// router.get("/preview", ResumeController?.ResumeGets?.streamResumePDF);
+
 router.put(
   "/update-resume",
   auth(UserRole.ADMIN),
-  multerPdfUpload.single("file"),
+  upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
     if (req.file) {
-      req.body.pdfUrl = req?.file?.path;
+      console.log("req.file", req.file);
     }
     next();
   },

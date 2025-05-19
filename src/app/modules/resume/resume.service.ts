@@ -28,7 +28,8 @@ const deleteResumeFromDB = async (id: string) => {
   });
   return result;
 };
-const updateResumeFromDB = async (id: string, payload: Partial<Resume>) => {
+const updateResumeFromDB = async (payload: Partial<Resume>) => {
+  const {id,...rest} = payload;
   await prisma.resume.findUniqueOrThrow({
     where: {
       id,
@@ -38,7 +39,7 @@ const updateResumeFromDB = async (id: string, payload: Partial<Resume>) => {
     where: {
       id,
     },
-    data: payload,
+    data: rest,
   });
   return result;
 };

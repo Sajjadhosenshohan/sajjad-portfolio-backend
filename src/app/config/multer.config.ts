@@ -15,6 +15,7 @@ const pdfStorage = new CloudinaryStorage({
   params: {
     folder: 'resumes',
     resource_type: 'raw',
+    access_mode: 'public',
     allowed_formats: ['pdf'],
     public_id: (req, file) => {
       const uniqueName = Date.now() + '-' + file.originalname;
@@ -24,3 +25,9 @@ const pdfStorage = new CloudinaryStorage({
 });
 
 export const multerPdfUpload = multer({ storage: pdfStorage });
+
+
+// For memory storage (for other types of files)
+
+const storage = multer.memoryStorage();
+export const upload = multer({ storage });

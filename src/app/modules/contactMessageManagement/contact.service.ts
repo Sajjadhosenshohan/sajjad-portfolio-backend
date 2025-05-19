@@ -54,8 +54,20 @@ const deleteMessageDataFromDB = async (id:string) => {
   return result;
 };
 
+const getSingleMessageDataFromDB = async (id:string) => {
+  const result = await prisma.message.findUniqueOrThrow({
+    where: {
+      id
+    }
+  });
+
+  
+  return result;
+};
+
 export const ContactServices = {
   addMessageIntoDB,
   getAllMessageDataFromDB,
-  deleteMessageDataFromDB
+  deleteMessageDataFromDB,
+  getSingleMessageDataFromDB
 };

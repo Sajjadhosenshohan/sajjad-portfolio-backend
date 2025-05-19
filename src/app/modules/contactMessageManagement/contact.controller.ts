@@ -32,8 +32,19 @@ const deleteMessageDataFromDB = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleMessageDataFromDB = catchAsync(async (req, res) => {
+  const result = await ContactServices.getSingleMessageDataFromDB(req.query.id as string);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Message retrieved successfully',
+    data: result,
+  });
+});
+
 export const ContactController = {
   addMessageData,
   getAllMessageData,
-  deleteMessageDataFromDB
+  deleteMessageDataFromDB,
+  getSingleMessageDataFromDB
 };

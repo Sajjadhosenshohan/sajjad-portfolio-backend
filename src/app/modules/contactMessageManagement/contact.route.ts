@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/add-message',ContactController.addMessageData);
 router.get('/',auth(UserRole.ADMIN), ContactController.getAllMessageData);
+router.get('/get-single-message',auth(UserRole.ADMIN), ContactController.getSingleMessageDataFromDB);
 router.delete('/delete-message',auth(UserRole.ADMIN), ContactController.deleteMessageDataFromDB);
 
 
