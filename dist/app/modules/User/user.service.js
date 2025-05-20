@@ -21,6 +21,14 @@ const paginationHelpers_1 = require("../../helpers/paginationHelpers");
 const createUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const hashPassword = yield bcryptjs_1.default.hash(data.password, Number(config_1.default.BCRYPT_SALt_ROUNDS));
     const userData = Object.assign(Object.assign({}, data), { password: hashPassword });
+    const existingUser = yield prisma_1.default.user.findUnique({
+        where: {
+            email: userData.email,
+        },
+    });
+    if (existingUser) {
+        throw new Error('User already exists');
+    }
     const result = yield prisma_1.default.user.create({
         data: userData,
     });
@@ -61,6 +69,9 @@ const getUserByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* ()
             id
         },
     });
+    if (!result) {
+        throw new Error('User not found');
+    }
     return result;
 });
 const updateIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {

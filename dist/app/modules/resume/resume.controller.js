@@ -85,7 +85,7 @@ const getAllResumeDataFromDB = (0, catchAsync_1.default)((req, res) => __awaiter
 exports.updateResumeFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const data = JSON.parse((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.data);
-    console.log("Controller data:", data);
+    console.log("Controller data:", data, req.file);
     if (req.file) {
         const uploadsDir = path_1.default.join(process.cwd(), "public/resumes");
         // Ensure directory exists
